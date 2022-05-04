@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+    <ng-container *ngIf="isAdmin === 'admin'">
+        <button mat-icon-button (click)="onToggleSidenav()">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </ng-container>
+        <a routerLink="/">My Login App</a>
+        <span class="spacer"></span>
+        <a mat-button *ngIf="!isLogged; else viewLogout" routerLink="/login" >Login</a>
+        <a mat-button *ngIf="isAdmin === 'admin'" routerLink="/admin">Admin</a>
+</mat-toolbar>
+
+<ng-template #viewLogout>
+    <a mat-button (click)="onLogout()">Logout</a>
+</ng-template>
