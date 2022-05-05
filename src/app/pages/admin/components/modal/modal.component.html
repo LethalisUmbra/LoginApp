@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>{{ data?.title }}</h2>
+
+<mat-dialog-content>
+    <div class="modal-form">
+        <form [formGroup]="userForm.baseForm">
+            <mat-form-field class="w-100">
+                <input required placeholder="Username" matInput formControlName="username">
+                <mat-error *ngIf="checkField('username')">
+                    {{ userForm.errorMessage }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-100" *ngIf="showPasswordField">
+                <input required placeholder="Password" matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                <mat-icon [color]="hide ? 'primary' : 'accent'" matSuffix (click)="hide = !hide" style="vertical-align: sub;">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-error *ngIf="checkField('password')">
+                    {{ userForm.errorMessage }}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <mat-label>Select role</mat-label>
+                <mat-select formControlName="role">
+                    <mat-option value="subscriber">Subscriber</mat-option>
+                    <mat-option value="admin">Admin</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="onSave()" cdkFocusInitial [disabled]="!userForm.baseForm.valid">Save</button>
+</mat-dialog-actions>

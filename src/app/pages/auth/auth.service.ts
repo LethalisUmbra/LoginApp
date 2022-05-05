@@ -12,24 +12,20 @@ const helper = new JwtHelperService()
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn = new BehaviorSubject<boolean>(false)
-  private role = new BehaviorSubject<Roles>(null)
-  private userToken = new BehaviorSubject<string>("")
+
+  private user = new BehaviorSubject<UserResponse>(null!)
+
 
   constructor(private http: HttpClient, private router: Router) {
     this.checkToken()
   }
 
-  get isLogged(): Observable<boolean> {
-    return this.loggedIn.asObservable()
+  get user$(): Observable<UserResponse> {
+    return this.user.asObservable()
   }
 
-  get isAdmin$(): Observable<Roles> {
-    return this.role.asObservable()
-  }
-
-  get userTokenValue() {
-    return this.userToken.getValue()
+  get userValue(): UserResponse {
+    return this.user.getValue()
   }
 
   login(authData: User): Observable<UserResponse | void> {
@@ -37,9 +33,7 @@ export class AuthService {
     .pipe(
       map( (user: UserResponse) => {
         this.saveLocalStorage(user)
-        this.loggedIn.next(true)  
-        this.role.next(user.role)
-        this.userToken.next(user.token)
+        this.user.next(user)
         return user
       } ),
       catchError( (err) => this.handleError(err) ) 
@@ -48,9 +42,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('user')
-    this.loggedIn.next(false)
-    this.role.next(null)
-    this.userToken.next("")
+    this.user.next(null!)
     this.router.navigate(['/login'])
   }
 
@@ -62,9 +54,7 @@ export class AuthService {
 
       if (isExpired) this.logout
       else
-        this.loggedIn.next(true)
-        this.role.next(user.role)
-        this.userToken.next(user.token)
+        this.user.next(user)
     }
   }
 

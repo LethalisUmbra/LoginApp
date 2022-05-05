@@ -1,7 +1,15 @@
 table {
-    width: 50%;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 1rem;
+    
+    th.mat-sort-header-sorted {
+      color: black;
+    }
+}
+
+.table-button-row {
+  button {
+    margin: 12px;
   }
-  
-  th.mat-sort-header-sorted {
-    color: black;
-  }
+}

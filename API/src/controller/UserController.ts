@@ -8,7 +8,7 @@ export class UserController {
     
     static getAll = async (req: Request, res: Response) => {
         const userRepository = AppDataSource.getRepository(User)
-        let users
+        let users:User[]
         try { users = await userRepository.find() }
         catch (e) { res.status(404).json({ message: 'Something went wrong' }) }
 

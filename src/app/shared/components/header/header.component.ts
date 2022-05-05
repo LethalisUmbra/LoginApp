@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { AuthService } from '@app/pages/auth/auth.service';
+import { UserResponse } from '@app/shared/models/user.interface';
 import { UtilsService } from '@app/shared/services/utils.service';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -20,8 +21,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private authSvc: AuthService, private utilsSvc:UtilsService) { }
 
   ngOnInit(): void {
-    this.authSvc.isLogged.pipe(takeUntil(this.destroy$)).subscribe( (res) => this.isLogged = res )
-    this.authSvc.isAdmin$.pipe(takeUntil(this.destroy$)).subscribe( (res) => this.isAdmin = res! )
+    this.authSvc.user$.pipe(takeUntil(this.destroy$)).subscribe( (user:UserResponse) => {
+      this.isLogged = true
+      this.isAdmin = user.role!
+    })
   }
 
   ngOnDestroy(): void {

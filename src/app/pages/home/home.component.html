@@ -1,1 +1,1 @@
-<h1 *ngIf="authSvc.isLogged | async">Welcome, user </h1>
+<h1 *ngIf="authSvc.user$ | async">Welcome, {{ authSvc.userValue.role }} </h1>

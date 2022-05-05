@@ -6,7 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from '@app/material.module';
 import { SidebarModule } from '@shared/components/sidebar/sidebar.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from '@shared/components/header/header.component';
@@ -29,7 +29,8 @@ import { AdminInterceptor } from '@shared/interceptors/admin-interceptor';
     MaterialModule,
     SidebarModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide:HTTP_INTERCEPTORS, useClass:AdminInterceptor, multi: true },
